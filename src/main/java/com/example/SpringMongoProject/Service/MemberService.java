@@ -13,4 +13,8 @@ public class MemberService {
     public Member saveMember(Member member) {
         return repository.save(member);
     }
+
+    public Member findByPhoneNumberAndPassword(String phoneNumber, String password) {
+        return repository.findByPhoneNumberAndPassword(phoneNumber, password);
+    }
 }
