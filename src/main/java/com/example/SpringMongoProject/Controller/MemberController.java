@@ -25,26 +25,9 @@ public class MemberController {
         }
         return member; // In production, return a JWT token instead
     }
-}
 
-class LoginRequest {
-    private String phoneNumber;
-    private String password;
-
-    // Getters and setters
-    public String getPhoneNumber() {
-        return phoneNumber;
-    }
-
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
+    @PostMapping("/forgot-password")
+    public String forgotPassword(@RequestBody ForgotPasswordRequest request) {
+        return memberService.requestPasswordReset(request.getPhoneNumber());
     }
 }
