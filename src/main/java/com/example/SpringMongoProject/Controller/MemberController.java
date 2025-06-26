@@ -2,6 +2,7 @@ package com.example.SpringMongoProject.Controller;
 
 import com.example.SpringMongoProject.Entity.Member;
 import com.example.SpringMongoProject.Service.MemberService;
+import com.example.SpringMongoProject.dto.ResetPasswordRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,11 +24,16 @@ public class MemberController {
         if (member == null) {
             throw new RuntimeException("Invalid phone number or password");
         }
-        return member; // In production, return a JWT token instead
+        return member;
     }
 
     @PostMapping("/forgot-password")
     public String forgotPassword(@RequestBody ForgotPasswordRequest request) {
         return memberService.requestPasswordReset(request.getPhoneNumber());
+    }
+
+    @PostMapping("/reset-password")
+    public boolean resetPassword(@RequestBody ResetPasswordRequest request) {
+        return memberService.resetPassword(request.getPhoneNumber(), request.getResetCode(), request.getNewPassword());
     }
 }

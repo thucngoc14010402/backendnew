@@ -25,10 +25,25 @@ public class MemberService {
         if (member == null) {
             throw new RuntimeException("Số điện thoại không tồn tại");
         }
-        // Giả lập tạo mã xác nhận (6 chữ số)
         String resetCode = String.format("%06d", new Random().nextInt(999999));
-        // Trong thực tế, gửi resetCode qua SMS hoặc email
-        System.out.println("Mã xác nhận cho " + phoneNumber + ": " + resetCode); // Log để kiểm tra
-        return resetCode; // Trả về mã để client xử lý (thay bằng gửi SMS)
+        member.setResetCode(resetCode); // Lưu mã xác nhận vào Member
+        repository.save(member); // Cập nhật vào MongoDB
+        System.out.println("Mã xác nhận cho " + phoneNumber + ": " + resetCode);
+        return resetCode;
+    }
+
+    public boolean resetPassword(String phoneNumber, String resetCode, String newPassword) {
+        Member member = repository.findByPhoneNumber(phoneNumber);
+        if (member == null) {
+            throw new RuntimeException("Số điện thoại không tồn tại");
+        }
+        // So sánh với mã đã lưu
+        if (!resetCode.equals(member.getResetCode())) {
+            throw new RuntimeException("Mã xác nhận không đúng");
+        }
+        member.setPassword(newPassword); // Cập nhật mật khẩu (nên hash)
+        member.setResetCode(null); // Xóa mã xác nhận sau khi sử dụng
+        repository.save(member);
+        return true;
     }
 }

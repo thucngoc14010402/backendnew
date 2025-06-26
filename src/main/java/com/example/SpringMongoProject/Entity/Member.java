@@ -7,36 +7,17 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class Member {
     @Id
     private String id;
-    private String fullName;
     private String phoneNumber;
     private String password;
-    private String provinceCity;
-    private String districtWard;
+    private String resetCode; // Thêm trường để lưu mã xác nhận
 
-    public Member() {}
-
-    public Member(String fullName, String phoneNumber, String password, String provinceCity, String districtWard) {
-        this.fullName = fullName;
-        this.phoneNumber = phoneNumber;
-        this.password = password;
-        this.provinceCity = provinceCity;
-        this.districtWard = districtWard;
-    }
-
+    // Getters and setters
     public String getId() {
         return id;
     }
 
     public void setId(String id) {
         this.id = id;
-    }
-
-    public String getFullName() {
-        return fullName;
-    }
-
-    public void setFullName(String fullName) {
-        this.fullName = fullName;
     }
 
     public String getPhoneNumber() {
@@ -55,19 +36,20 @@ public class Member {
         this.password = password;
     }
 
-    public String getProvinceCity() {
-        return provinceCity;
+    public String getResetCode() {
+        return resetCode;
     }
 
-    public void setProvinceCity(String provinceCity) {
-        this.provinceCity = provinceCity;
+    public void setResetCode(String resetCode) {
+        this.resetCode = resetCode;
     }
 
-    public String getDistrictWard() {
-        return districtWard;
+    // Constructor
+    public Member() {
     }
 
-    public void setDistrictWard(String districtWard) {
-        this.districtWard = districtWard;
+    public Member(String phoneNumber, String password) {
+        this.phoneNumber = phoneNumber;
+        this.password = password;
     }
 }
